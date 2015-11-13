@@ -12,7 +12,7 @@ rotor_sequences = {
     'IIC': ('HQZGPJTMOBLNCIFDYAWVEUSRKX', ('Q')), #civilian
     'IIIC': ('UQNTLSZFMREHDPXKIBVYGJCWOA', ('Q')), #civilian
     'BETA': ('LEYJVCNIXWPBQMDRTAKZGFUHOS', None), #Position 4 Only
-    'GAMA': ('FSOKANUERHMBTIYCWLQPZXVGJD', None) #Position 4 Only
+    'GAMMA': ('FSOKANUERHMBTIYCWLQPZXVGJD', None) #Position 4 Only
 }
 
 #Simple letter substitutions before the sequence is sent back through the rotors. Notably a letter cannot be encoded as itself here. 
