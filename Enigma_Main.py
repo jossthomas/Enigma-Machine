@@ -1,7 +1,7 @@
 from string import ascii_uppercase
+from copy import deepcopy
 from Enigma_Components import rotor, reflector, rotor_array, plugboard
 from Default_Settings import reflector_sequences, rotor_sequences, ETW
-from copy import deepcopy
 
 class enigma:
     def __init__(self):
