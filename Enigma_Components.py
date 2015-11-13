@@ -54,7 +54,6 @@ class reflector:
 
     def reflect(self, letter):
         letter_index = self.l_index.index(letter)
-
         return self.reciprocal[letter_index]
 
     def __str__(self):
@@ -71,14 +70,12 @@ class rotor_array:
     def encode(self, letter): #Before reflector
         for i in self.rotors: #iterate through all rotors
             letter = i.encode_letter(letter)
-        
         return letter
 
     def reverse_encode(self, letter):
         reverse_rotors = self.rotors[::-1] #after the reflector the letters are passed through the rotors backwards.
         for i in reverse_rotors: #iterate through all rotors
             letter = i.reverse_encode_letter(letter)
-
         return letter
 
     def rotate_rotors(self):
