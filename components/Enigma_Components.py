@@ -1,12 +1,13 @@
 from string import ascii_uppercase #I'll use the index of letters in this to create the rotors
 
 class rotor:
+    """These map letters to reciprocal non identical letters and have the ability to rotate and thereby change the key"""
     def __init__(self, output_sequence, position, turnover_notches):
         self.position = position
         self.input_sequence = ascii_uppercase[self.position:] + ascii_uppercase[:self.position] 
         self.output_sequence = output_sequence
         self.turnover_notches = turnover_notches #Only useful for debugging
-        if turnover_notches != None:
+        if turnover_notches is not None:
             self.turnover_indexes = [self.input_sequence.index(i) + 1 for i in turnover_notches] #We need the turnover position as an int so it matches the position, + 1 as the rotation occurs after the letter not before
         else:
             self.turnover_indexes = None #will never turn
@@ -45,6 +46,7 @@ class rotor:
         return('In:  {0[0]}\nOut: {0[1]}\nPosition {0[2]} ({0[3]})\nNotches {0[4]} ({0[5]})\n'.format(variables))
              
 class reflector:
+    """This maps each letter to another reciprocal and non-identical letter"""
     def __init__(self):
         self.l_index = ascii_uppercase
         self.reciprocal = None
@@ -61,6 +63,7 @@ class reflector:
         return "Reflector:\nIn:  {0}\nOut: {1}".format(self.l_index, self.reciprocal)
 
 class rotor_array:
+    """This acts as a container for the rotors and allows for iteration over them in a consistent order"""
     def __init__(self):
         self.rotors = [] # a place to store any number of rotors!
 
@@ -88,8 +91,8 @@ class rotor_array:
             current_rotor += 1 
             self.rotors[current_rotor].rotate()
 
-#The plugboard swaps pairs of letters pre encoding. Usually supplied with 10 wires allowing for 10 AB pairs
 class plugboard:
+    """The plugboard swaps pairs of letters pre encoding. Usually supplied with 10 wires allowing for 10 AB pairs"""
     def __init__(self):
         self.used_letters = []
         self.letter_pairs = {}
