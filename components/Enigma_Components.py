@@ -63,6 +63,26 @@ class reflector:
 
     def __str__(self):
         return "Reflector:\nIn:  {0}\nOut: {1}".format(self.l_index, self.reciprocal)
+        
+class entry_wheel:
+    """Acts to connect the keyboard and rotors, generally has no effect on mapping"""
+    def __init__(self):
+        self.l_index = ascii_uppercase
+        self.reciprocal = None
+
+    def set(self, reciprocal):
+        self.reciprocal = reciprocal
+
+    def forwards_encode(self, letter):
+        letter_index = self.l_index.index(letter)
+        return self.reciprocal[letter_index]
+        
+    def backwards_encode(self, letter):
+        letter_index = self.reciprocal.index(letter)
+        return self.l_index[letter_index]
+
+    def __str__(self):
+        return "Reflector:\nIn:  {0}\nOut: {1}".format(self.l_index, self.reciprocal)
 
 class rotor_array:
     """This acts as a container for the rotors and allows for iteration over them in a consistent order"""
