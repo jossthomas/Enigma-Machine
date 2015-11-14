@@ -32,6 +32,7 @@ class enigma:
 
     def manual_setup(self):
         """Allows the user to manually define all components of the device"""
+        self.choose_entry_wheel()
         self.choose_rotors()
         self.choose_reflector()
         self.set_rotor_positions()
@@ -39,6 +40,16 @@ class enigma:
 
         print("\nCurrent Enigma Setup: \n")
         self.print_setup()
+        
+    def choose_entry_wheel(self):
+        """Acts as part of the key in the naval version only"""
+        available_ETW = list(ETW.keys())
+        ETW_choice = None
+
+        print("Available Entry Wheels: ", ', '.join(available_ETW))
+        while ETW_choice not in available_ETW:
+            ETW_choice = input("Choose Entry Wheel.\n> ")
+        self.main_entry_wheel.set(ETW[ETW_choice])
 
     def choose_rotors(self):
         """Choose rotors from the set of historic rotors in default_settings.py"""
@@ -77,16 +88,6 @@ class enigma:
         while reflector_choice not in available_reflectors:
             reflector_choice = input("Choose reflector.\n> ")
         self.main_reflector.set(reflector_sequences[reflector_choice])
-        
-    def choose_entry_wheel(self):
-        """Acts as part of the key in the naval version only"""
-        available_ETW = list(ETW.keys())
-        ETW_choice = None
-
-        print("Available Entry Wheels: ", ', '.join(available_ETW))
-        while ETW_choice not in available_ETW:
-            ETW_choice = input("Choose Entry Wheel.\n> ")
-        self.main_entry_wheel.set(ETW[ETW_choice])
 
     def configure_plugboard(self):
         """Allows for letter swapping hence greatly increases entropy"""
