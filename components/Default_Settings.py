@@ -21,7 +21,8 @@ reflector_sequences = {
     'B': 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
     'C': 'FVPJIAOYEDRZXWGCTKUQSBNMHL',
     'B Thin': 'ENKQAUYWJICOPBLMDXZVFTHRGS',
-    'C Thin': 'RDOBJNTKVEHMLFCWZAXGYIPSUQ'
+    'C Thin': 'RDOBJNTKVEHMLFCWZAXGYIPSUQ',
+    'None': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' #Early models had no reflector
 }
 
 #Entry wheel for Enigma I 
