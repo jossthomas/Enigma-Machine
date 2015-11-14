@@ -26,4 +26,7 @@ reflector_sequences = {
 }
 
 #Entry wheel for Enigma I 
-ETW = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+ETW = {
+    'Standard': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'Navy': 'QWERTZIOPASDFGHJKLYXCVBNM'
+    }
