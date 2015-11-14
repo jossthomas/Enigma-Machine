@@ -3,6 +3,7 @@ from .Enigma_Components import rotor, reflector, rotor_array, plugboard
 from .Default_Settings import reflector_sequences, rotor_sequences, ETW
 
 class enigma:
+    """Broad container class for all enigma components and setup proceedures, acts to interface between the frontend and the subcomponents"""
     def __init__(self):
         self.rotors = rotor_array()
         self.main_reflector = reflector()
