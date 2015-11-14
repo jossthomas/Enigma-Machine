@@ -82,7 +82,7 @@ class entry_wheel:
         return self.l_index[letter_index]
 
     def __str__(self):
-        return "Entry Wheel:\nIn:  {0}\nOut: {1}".format(self.l_index, self.reciprocal)
+        return "Entry Wheel:\nIn:  {0}\nOut: {1}\n".format(self.l_index, self.reciprocal)
 
 class rotor_array:
     """This acts as a container for the rotors and allows for iteration over them in a consistent order"""
