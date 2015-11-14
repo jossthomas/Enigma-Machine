@@ -54,7 +54,7 @@ class enigma:
     def choose_rotors(self):
         """Choose rotors from the set of historic rotors in default_settings.py"""
         rotor_choice = None
-        remaining_rotors = list(rotor_sequences.keys())
+        remaining_rotors = list(rotor_sequences.keys()).sort() # would like to improve this sorting somehow, but want to keep list dyanmically generated
 
         #Choose number of rotors
         #limited to 4 for historic reasons and because additional rotors lose functionality due to rarity of turning
