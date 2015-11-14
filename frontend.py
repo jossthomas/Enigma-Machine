@@ -9,12 +9,14 @@ def main():
     original_settings = None # Used to store a copy of original settings, allows for decoding
     setup_mode = None #Manual or custom setup
     
-    help = '''\n\'Encode\': Encode/Decode a message
+    help = '''
+    \'Encode\': Encode/Decode a message
     \'Rotors\': Change rotor positions
     \'Reset\': Go to original settings
     \'Settings\': Display current settings
     \'Help\': Show this message again
-    \'Close\': Close the simulator'''
+    \'Close\': Close the simulator
+    '''
 
     while setup_mode not in ['manual', 'default']:
         print('Type manual for manual setup or default for default settings.')

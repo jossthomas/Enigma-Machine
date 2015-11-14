@@ -1,6 +1,6 @@
-from string import ascii_uppercase
+﻿from string import ascii_uppercase
 from .Enigma_Components import rotor, entry_wheel, reflector, rotor_array, plugboard
-from .Default_Settings import reflector_sequences, rotor_sequences, ETW
+from .Default_Settings import reflector_sequences, rotor_sequences, ETW, cat_sort, numeral_sort
 
 class enigma:
     """Broad container class for all enigma components and setup proceedures, acts to interface between the frontend and the subcomponents"""
@@ -48,15 +48,16 @@ class enigma:
 
         print("Available Entry Wheels: ", ', '.join(available_ETW))
         while ETW_choice not in available_ETW:
-            ETW_choice = input("Choose Entry Wheel.\n> ")
+            ETW_choice = input("Choose Entry Wheel.\n> ").upper()
         self.main_entry_wheel.set(ETW[ETW_choice])
 
     def choose_rotors(self):
         """Choose rotors from the set of historic rotors in default_settings.py"""
         rotor_choice = None
-        remaining_rotors = list(rotor_sequences.keys()).sort() # would like to improve this sorting somehow, but want to keep list dyanmically generated
+        remaining_rotors = list(rotor_sequences.keys())
+        remaining_rotors.sort(key=lambda x: (cat_sort(x), numeral_sort(x))) #Sort the rotors into three categories, then by numeral within categories
 
-        #Choose number of rotors
+        #Choose number of rotor
         #limited to 4 for historic reasons and because additional rotors lose functionality due to rarity of turning
         Num_Rotors = input("Enter Desired Number of Rotors (up to 4).\n> ")
         while Num_Rotors not in ["1", "2", "3", "4"]:
@@ -75,7 +76,7 @@ class enigma:
         rotor_position_start = None
         for index, rotor in enumerate(self.rotors.rotors):
             while rotor_position_start not in map(str, list(range(1,27))): #Check a valid number was entered
-                rotor_position_start = input('Please enter starting position for rotor {}.\n> '.format(index + 1))
+                rotor_position_start = input('Please enter starting position for rotor {} between 1 and 26.\n> '.format(index + 1))
             rotor.set_position(int(rotor_position_start) - 1) #Subtract 1 from the index due to 0 indexing of rotors
             rotor_position_start = None #reset this so it works next time
 
