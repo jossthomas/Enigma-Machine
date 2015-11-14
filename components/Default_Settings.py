@@ -55,5 +55,5 @@ def numeral_sort(x):
                 'IX': 9,
                 'X': 10
                 }
-    string = ''.join([i for i in x if i in ('I','V','X')])
+    string = ''.join([i for i in x if i in ('I','V','X')]) 
     return(numerals.get(string, 0))

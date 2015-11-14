@@ -1,4 +1,4 @@
-from string import ascii_uppercase #I'll use the index of letters in this to create the rotors
+﻿from string import ascii_uppercase #I'll use the index of letters in this to create the rotors
 
 class rotor:
     """These map letters to reciprocal non identical letters and have the ability to rotate and thereby change the key"""
@@ -16,7 +16,7 @@ class rotor:
         """Set the rotor so encoding/decoding starts on same setting"""
         self.position = position
 
-    def rotate(self, step=1):
+    def rotate(self, step=1): #May add additional step functionality later but currently redundant. 
         """Rotate the rotor +1 and adjust input string accordingly"""
         self.position += step
         if self.position == 26: #rotor has performed a full rotation so reset
@@ -46,7 +46,7 @@ class rotor:
                      self.turnover_notches,
                      self.turnover_indexes
                     ]
-        return('In:  {0[0]}\nOut: {0[1]}\nPosition {0[2]} ({0[3]})\nNotches {0[4]} ({0[5]})\n'.format(variables))
+        return('In:  {0[0]}\nOut: {0[1]}\nCurrent Position {0[2]} ({0[3]})\nTurnover Notches {0[4]} ({0[5]})\n'.format(variables))
              
 class reflector:
     """This maps each letter to another reciprocal and non-identical letter"""

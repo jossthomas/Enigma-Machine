@@ -137,7 +137,7 @@ class enigma:
         """Print the current enigma component settings"""
         print(self.main_entry_wheel)
         for i, i_rotor in enumerate(self.rotors.rotors):
-            print("Rotor ", i)
+            print("Rotor ", i + 1)
             print(i_rotor)
         print(self.main_reflector)
         print(self.main_plugboard)
