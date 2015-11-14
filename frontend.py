@@ -3,16 +3,18 @@ from components import Enigma_Machine
 
 def main():
     print("Enigma Simulator")
-    closed = False
-    original_settings = None
+    
+    encoding_enigma = Enigma_Machine.enigma() #Create engima with no settings
+    closed = False #Used to end the script
+    original_settings = None # Used to store a copy of original settings, allows for decoding
+    setup_mode = None #Manual or custom setup
+    
     help = '''\n\'Encode\': Encode/Decode a message
               \'Rotors\': Change rotor positions
               \'Reset\': Go to original settings
               \'Settings\': Display current settings
               \'Help\': Show this message again\n'''
 
-    encoding_enigma = Enigma_Machine.enigma()
-    setup_mode = None
     while setup_mode not in ['manual', 'default']:
         print('Type manual for manual setup or default for default settings.')
         setup_mode = input('> ').lower()
@@ -25,7 +27,7 @@ def main():
 
     print(help)
     while not closed:
-        user_input = input('> ').lower()
+        user_input = input('> ').lower() #From hereon its really simple text detection
         
         if user_input == 'encode':
             message = input('Enter message using acsii letters only: ')
