@@ -1,6 +1,8 @@
 # Enigma-Machine
 A python based implementation of the famous WW2 enigma machine with full customisation options. 
 
+
+
 Simply run frontend.py (python 3.X) to operate and follow onscreen instructions.
 
 Frontend.py: Simple (messy) function for interfacting with enigma machine classes
