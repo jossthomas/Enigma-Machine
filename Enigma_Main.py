@@ -124,7 +124,8 @@ def main():
               \'Rotors\': Change rotor positions
               \'Reset\': Go to original settings
               \'Settings\': Display current settings
-              \'Help\': Show this message again\n'''
+              \'Help\': Show this message again
+              \'Close\': Terminate the program\n'''
 
     encoding_enigma = enigma()
     setup_mode = None
