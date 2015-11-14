@@ -1,4 +1,4 @@
-from copy import deepcopy
+﻿from copy import deepcopy
 from components import Enigma_Machine
 
 def main():
@@ -10,10 +10,11 @@ def main():
     setup_mode = None #Manual or custom setup
     
     help = '''\n\'Encode\': Encode/Decode a message
-              \'Rotors\': Change rotor positions
-              \'Reset\': Go to original settings
-              \'Settings\': Display current settings
-              \'Help\': Show this message again\n'''
+    \'Rotors\': Change rotor positions
+    \'Reset\': Go to original settings
+    \'Settings\': Display current settings
+    \'Help\': Show this message again
+    \'Close\': Close the simulator'''
 
     while setup_mode not in ['manual', 'default']:
         print('Type manual for manual setup or default for default settings.')
