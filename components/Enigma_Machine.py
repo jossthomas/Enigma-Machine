@@ -10,6 +10,7 @@ class enigma:
         self.main_plugboard = plugboard()
 
     def default_setup(self):
+        """Set of default rotors, reflectors and plugs, useful for testing"""
         pairs = "" #No point having a plugboard really, commercial Enigmas didn't have them.
 
         if pairs != "": #Incase anyone really wants one
@@ -27,6 +28,7 @@ class enigma:
         self.main_reflector.set(reflector_sequences['A'])
 
     def manual_setup(self):
+        """Allows the user to manually define all components of the device"""
         self.choose_rotors()
         self.choose_reflector()
         self.set_rotor_positions()
@@ -36,6 +38,7 @@ class enigma:
         self.print_setup()
 
     def choose_rotors(self):
+        """Choose rotors from the set of historic rotors in default_settings.py"""
         rotor_choice = None
         remaining_rotors = list(rotor_sequences.keys())
 
@@ -54,6 +57,7 @@ class enigma:
             remaining_rotors.remove(rotor_choice)
 
     def set_rotor_positions(self):
+        """The starting rotations of the rotors acts as a key for the the code"""
         rotor_position_start = None
         for index, rotor in enumerate(self.rotors.rotors):
             while rotor_position_start not in map(str, list(range(1,27))): #Check a valid number was entered
@@ -62,6 +66,7 @@ class enigma:
             rotor_position_start = None #reset this so it works next time
 
     def choose_reflector(self):
+        """Essentially acts as another part of the key"""
         available_reflectors = list(reflector_sequences.keys())
         reflector_choice = None
 
@@ -71,6 +76,7 @@ class enigma:
         self.main_reflector.set(reflector_sequences[reflector_choice])
 
     def configure_plugboard(self):
+        """Allows for letter swapping hence greatly increases entropy"""
         plugs = None
         plugs_to_add = []
         used_letters = []
@@ -92,6 +98,7 @@ class enigma:
             self.main_plugboard.set(plugs_to_add)
 
     def run(self, message):
+        """Take a string and split it before feeding it through enigma element wise"""
         message = list(message.upper().replace(' ', '')) #convert to a list so we can map it
         assert len([i for i in message if i not in ascii_uppercase]) == 0, 'String contains invalid characters! Only letters are allowed.'
 
@@ -99,6 +106,7 @@ class enigma:
         return output
 
     def encode(self, letter):
+        """Encoding a single letter, note that the process is mirrored before and after the reflector hence reversible"""
         self.rotors.rotate_rotors() #Occurs before the letter is encoded
         letter = self.main_plugboard.substitute(letter)
         letter = self.rotors.encode(letter)
@@ -109,6 +117,7 @@ class enigma:
         return letter
 
     def print_setup(self):
+        """Print the current enigma component settings"""
         for i, i_rotor in enumerate(self.rotors.rotors):
             print("Rotor ", i)
             print(i_rotor)
