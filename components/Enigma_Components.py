@@ -12,24 +12,27 @@ class rotor:
         else:
             self.turnover_indexes = None #will never turn
 
-    def set_position(self, position): #Set the rotor so encoding/decoding starts on same setting
+    def set_position(self, position): 
+        """Set the rotor so encoding/decoding starts on same setting"""
         self.position = position
 
-    def rotate(self):
-        self.position += 1
-
+    def rotate(self, step=1):
+        """Rotate the rotor +1 and adjust input string accordingly"""
+        self.position += step
         if self.position == 26: #rotor has performed a full rotation so reset
             self.position = 0
 
         self.input_sequence = ascii_uppercase[self.position:] + ascii_uppercase[:self.position] 
 
-    def encode_letter(self, letter): #First time through the rotors forwards
+    def encode_letter(self, letter): 
+        """First time through the rotors forwards"""
         input_index = self.input_sequence.index(letter)
         output_letter = self.output_sequence[input_index]
 
         return output_letter
 
-    def reverse_encode_letter(self, letter):  # second time through rotors backwards
+    def reverse_encode_letter(self, letter):  
+        """second time through rotors backwards"""
         input_index = self.output_sequence.index(letter)
         output_letter = self.input_sequence[input_index]
 
@@ -56,7 +59,6 @@ class reflector:
 
     def reflect(self, letter):
         letter_index = self.l_index.index(letter)
-
         return self.reciprocal[letter_index]
 
     def __str__(self):
@@ -71,20 +73,21 @@ class rotor_array:
         rotor_init = rotor(output_sequence, position, turnover_notches)
         self.rotors.append(rotor_init)
 
-    def encode(self, letter): #Before reflector
-        for i in self.rotors: #iterate through all rotors
+    def encode(self, letter): 
+        """Iterates through all rotors pre reflector"""
+        for i in self.rotors:
             letter = i.encode_letter(letter)
-        
         return letter
 
     def reverse_encode(self, letter):
-        reverse_rotors = self.rotors[::-1] #after the reflector the letters are passed through the rotors backwards.
-        for i in reverse_rotors: #iterate through all rotors
+        """Iterates through all rotors post reflector"""
+        reverse_rotors = self.rotors[::-1] #Reverse the set for ease
+        for i in reverse_rotors:
             letter = i.reverse_encode_letter(letter)
-
         return letter
 
     def rotate_rotors(self):
+        """Rotate first rotor and check if others need rotating"""
         current_rotor = 0
         self.rotors[current_rotor].rotate() #first rotor always rotates
         while self.rotors[current_rotor].position in self.rotors[current_rotor].turnover_indexes: #check if we need to rotate the next rotor
@@ -98,6 +101,7 @@ class plugboard:
         self.letter_pairs = {}
 
     def set(self, pairs):
+        """Create random letter swaps"""
         assert len(''.join(pairs)) == len(set(''.join(pairs))), "Letter contained in plugboard twice!"
         for pair in pairs:
             first, second = pair[0], pair[1]
@@ -105,7 +109,8 @@ class plugboard:
             self.letter_pairs[second] = first
 
     def substitute(self, letter):
-        return self.letter_pairs.get(letter, letter) #if no plug set then letter passes through
+        """If no plug set then letter passes through"""
+        return self.letter_pairs.get(letter, letter)
 
     def __str__(self):
         return '\nPlugboard:\n' + ' '.join([''.join(i) for i in self.letter_pairs.items()])
