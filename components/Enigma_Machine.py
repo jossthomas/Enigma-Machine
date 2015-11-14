@@ -1,10 +1,11 @@
 from string import ascii_uppercase
-from .Enigma_Components import rotor, reflector, rotor_array, plugboard
+from .Enigma_Components import rotor, entry_wheel, reflector, rotor_array, plugboard
 from .Default_Settings import reflector_sequences, rotor_sequences, ETW
 
 class enigma:
     """Broad container class for all enigma components and setup proceedures, acts to interface between the frontend and the subcomponents"""
     def __init__(self):
+        self.main_entry_wheel = entry_wheel() 
         self.rotors = rotor_array()
         self.main_reflector = reflector()
         self.main_plugboard = plugboard()
@@ -16,6 +17,8 @@ class enigma:
         if pairs != "": #Incase anyone really wants one
             pairs = pairs.split(" ") 
             self.main_plugboard.set(pairs)
+            
+        self.main_entry_wheel.set(ETW['Standard'])
 
         rotor_spec = rotor_sequences['I']
         rotor_spec2 = rotor_sequences['II']
@@ -74,6 +77,16 @@ class enigma:
         while reflector_choice not in available_reflectors:
             reflector_choice = input("Choose reflector.\n> ")
         self.main_reflector.set(reflector_sequences[reflector_choice])
+        
+    def choose_entry_wheel(self):
+        """Acts as part of the key in the naval version only"""
+        available_ETW = list(ETW.keys())
+        ETW_choice = None
+
+        print("Available Entry Wheels: ", ', '.join(available_ETW))
+        while ETW_choice not in available_ETW:
+            ETW_choice = input("Choose Entry Wheel.\n> ")
+        self.main_entry_wheel.set(ETW[ETW_choice])
 
     def configure_plugboard(self):
         """Allows for letter swapping hence greatly increases entropy"""
@@ -109,15 +122,18 @@ class enigma:
         """Encoding a single letter, note that the process is mirrored before and after the reflector hence reversible"""
         self.rotors.rotate_rotors() #Occurs before the letter is encoded
         letter = self.main_plugboard.substitute(letter)
+        letter = self.main_entry_wheel.forwards_encode(letter)
         letter = self.rotors.encode(letter)
         letter = self.main_reflector.reflect(letter) #No letter can ever encode itself
         letter = self.rotors.reverse_encode(letter)
+        letter = self.main_entry_wheel.backwards_encode(letter)
         letter = self.main_plugboard.substitute(letter)
         
         return letter
 
     def print_setup(self):
         """Print the current enigma component settings"""
+        print(self.main_entry_wheel)
         for i, i_rotor in enumerate(self.rotors.rotors):
             print("Rotor ", i)
             print(i_rotor)
