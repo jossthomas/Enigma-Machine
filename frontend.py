@@ -1,5 +1,6 @@
 ﻿from copy import deepcopy
 from components import Enigma_Machine
+from string import ascii_uppercase
 
 def main():
     print("Enigma Simulator")
@@ -33,10 +34,13 @@ def main():
         user_input = input('> ').lower() #From hereon its really simple text detection
         
         if user_input == 'encode':
-            message = input('Enter message using acsii letters only: ')
+            message = input('Enter message using acsii letters only: ').upper()
             print('Encoding \'{}\''.format(message))
-            message = encoding_enigma.run(message)
-            print('Encoded string \'{}\''.format(message))
+            if len([i for i in message if i not in ascii_uppercase]) > 0:
+                print("Warning: Special characters including spaces cannot be encoded")
+            message = ''.join([i for i in message if i in ascii_uppercase])
+            message = encoding_enigma.run(message) 
+            print('Encoded string: \'{}\''.format(message))
         elif user_input == 'rotors':
             encoding_enigma.set_rotor_positions()
         elif user_input == 'reset':

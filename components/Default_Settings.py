@@ -34,9 +34,9 @@ ETW = {
 #Functions used to sort rotor_sequences.keys() into a logical order in frontend
 def cat_sort(x):
     '''Sort by categories (Civilian, Main, 1942)'''
-    score_x = 0
+    score_x = -1
     if x[-1] == 'C':
-        score_x = -1
+        score_x = 0
     elif x in ('BETA', 'GAMMA'):
         score_x = 1
     return score_x
@@ -51,7 +51,7 @@ def numeral_sort(x):
                 'V': 5,
                 'VI': 6,
                 'VII': 7,
-                'VII': 8,
+                'VIII': 8,
                 'IX': 9,
                 'X': 10
                 }

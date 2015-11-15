@@ -22,7 +22,7 @@ class rotor:
         if self.position == 26: #rotor has performed a full rotation so reset
             self.position = 0
 
-        self.input_sequence = ascii_uppercase[self.position:] + ascii_uppercase[:self.position] 
+        self.input_sequence = ascii_uppercase[self.position:] + ascii_uppercase[:self.position] #Using ascii uppercase here avoids step increasing each time. 
 
     def encode_letter(self, letter): 
         """First time through the rotors forwards"""

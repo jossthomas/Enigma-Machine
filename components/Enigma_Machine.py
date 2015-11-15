@@ -1,4 +1,5 @@
 ﻿from string import ascii_uppercase
+from random import randrange #used for manual setup - allowing human choice of rotor positions creates bias
 from .Enigma_Components import rotor, entry_wheel, reflector, rotor_array, plugboard
 from .Default_Settings import reflector_sequences, rotor_sequences, ETW, cat_sort, numeral_sort
 
@@ -18,7 +19,7 @@ class enigma:
             pairs = pairs.split(" ") 
             self.main_plugboard.set(pairs)
             
-        self.main_entry_wheel.set(ETW['Standard'])
+        self.main_entry_wheel.set(ETW['STANDARD'])
 
         rotor_spec = rotor_sequences['I']
         rotor_spec2 = rotor_sequences['II']
@@ -74,9 +75,15 @@ class enigma:
     def set_rotor_positions(self):
         """The starting rotations of the rotors acts as a key for the the code"""
         rotor_position_start = None
+        randomise = None
+        while randomise not in ('manual', 'random'):
+            randomise = input('Enter \'manual\' for custom positions or \'random\' for randomly generated positions:\n> ').lower() #non random rotor positions made crytoanalysis easier historically
         for index, rotor in enumerate(self.rotors.rotors):
-            while rotor_position_start not in map(str, list(range(1,27))): #Check a valid number was entered
-                rotor_position_start = input('Please enter starting position for rotor {} between 1 and 26.\n> '.format(index + 1))
+            if randomise == 'manual':
+                while rotor_position_start not in map(str, list(range(1,27))): #Check a valid number was entered
+                    rotor_position_start = input('Please enter starting position for rotor {} between 1 and 26.\n> '.format(index + 1))
+            elif randomise == 'random':
+                rotor_position_start = randrange(1,27)
             rotor.set_position(int(rotor_position_start) - 1) #Subtract 1 from the index due to 0 indexing of rotors
             rotor_position_start = None #reset this so it works next time
 
@@ -99,7 +106,7 @@ class enigma:
 
         #Choose number of plugs, 26 letter so 13 possible connections
         while plugs not in map(str, list(range(0,14))):
-            plugs = input("Enter number of connections, Must be a number between 0 and 13.\n> ")
+            plugs = input("Enter number of connections, Must be a number between 0 and 13.\n> ").upper()
         
         if plugs != '0':
             for i in range(int(plugs)):
@@ -114,15 +121,12 @@ class enigma:
 
     def run(self, message):
         """Take a string and split it before feeding it through enigma element wise"""
-        message = list(message.upper().replace(' ', '')) #convert to a list so we can map it
-        assert len([i for i in message if i not in ascii_uppercase]) == 0, 'String contains invalid characters! Only letters are allowed.'
-
-        output = ''.join(list(map(self.encode, message)))
+        output = ''.join(list(map(self.encode, list(message))))
         return output
 
     def encode(self, letter):
         """Encoding a single letter, note that the process is mirrored before and after the reflector hence reversible"""
-        self.rotors.rotate_rotors() #Occurs before the letter is encoded
+        self.rotors.rotate_rotors() #Historically occured before the letter is encoded
         letter = self.main_plugboard.substitute(letter)
         letter = self.main_entry_wheel.forwards_encode(letter)
         letter = self.rotors.encode(letter)
