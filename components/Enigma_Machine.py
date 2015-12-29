@@ -94,7 +94,7 @@ class enigma:
 
         print("Available Reflectors: ", ', '.join(available_reflectors))
         while reflector_choice not in available_reflectors:
-            reflector_choice = input("Choose reflector.\n> ")
+            reflector_choice = input("Choose reflector.\n> ").upper()
         self.main_reflector.set(reflector_sequences[reflector_choice])
 
     def configure_plugboard(self):
@@ -112,11 +112,10 @@ class enigma:
             for i in range(int(plugs)):
               pair = 'aa'
               while pair[0] not in letters or pair[1] not in letters:
-                    pair = input("Enter plug pair, should be in the format AB. \nAvailable plugs: {}.\n> ".format(''.join(letters)))
+                    pair = input("Enter plug pair, should be in the format AB. \nAvailable plugs: {}.\n> ".format(''.join(letters))).upper()
               letters.remove(pair[0])
               letters.remove(pair[1])
               plugs_to_add.append(pair.upper())
-
             self.main_plugboard.set(plugs_to_add)
 
     def run(self, message):
@@ -134,7 +133,6 @@ class enigma:
         letter = self.rotors.reverse_encode(letter)
         letter = self.main_entry_wheel.backwards_encode(letter)
         letter = self.main_plugboard.substitute(letter)
-        
         return letter
 
     def print_setup(self):
